@@ -1,0 +1,92 @@
+﻿import streamlit as st
+from google import genai
+from google.genai import types
+import os
+
+# -----------------------------
+# Streamlit setup
+# -----------------------------
+st.set_page_config(page_title="NMU Advisor Bot", layout="wide")
+
+# -----------------------------
+# Logo and Title Centered perfectly
+# -----------------------------
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    sub_col1, sub_col2, sub_col3 = st.columns([1, 2, 1])
+    with sub_col2:
+        st.image("New_Mansoura_University.png", width=250)  # perfectly centered
+
+st.markdown('<h2 style="text-align:center;">NMU Advisor Chatbot</h2>', unsafe_allow_html=True)
+
+# -----------------------------
+# Google AI Studio API key (hardcoded)
+# -----------------------------
+google_api_key = "YOUR_API_KEY_HERE"  # <-- replace with your actual API key
+
+# -----------------------------
+# Initialize chat state
+# -----------------------------
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# -----------------------------
+# Display chat messages (alignment only)
+# -----------------------------
+for msg in st.session_state.messages:
+    st.chat_message(msg["role"]).write(msg["content"])
+
+# -----------------------------
+# Google Gemini API call
+# -----------------------------
+def generate_reply_google(prompt):
+    client = genai.Client(api_key=google_api_key)
+    contents = [types.Content(role="user", parts=[types.Part.from_text(text=prompt)])]
+    tools = [types.Tool(googleSearch=types.GoogleSearch())]
+    config = types.GenerateContentConfig(tools=tools, temperature=0.3, max_output_tokens=600)
+
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=contents,
+            config=config,
+        )
+        return response.text
+    except Exception as e:
+        return f"Error contacting Gemini API: {e}"
+
+# -----------------------------
+# Handle user input
+# -----------------------------
+user_input = st.chat_input("Ask a question about the university...")
+
+if user_input:
+    st.session_state.messages.append({"role": "user", "content": user_input})
+    st.chat_message("user").write(user_input)
+
+    prompt = f"""You are a university advisor for New University (NMU). 
+Your role is to help students with questions about the university.
+
+IMPORTANT: If you need to find specific information to answer the user's question, 
+you should search through the NMU website at: https://www.nmu.edu.eg/ar
+
+Use your knowledge from that website to provide accurate answers about:
+- Admission requirements and procedures
+- Academic programs and majors
+- Tuition fees and scholarships
+- Student services and facilities
+- Campus life and extracurricular activities
+- Faculty and departments
+- Any other university-related information
+
+If the user's question is not related to NMU or universities, politely redirect them.
+
+User Question: {user_input}
+
+Please provide a helpful and accurate answer based on NMU's website information.
+"""
+    with st.spinner("Thinking..."):
+        reply = generate_reply_google(prompt)
+
+    st.session_state.messages.append({"role": "assistant", "content": reply})
+    st.chat_message("assistant").write(reply)
