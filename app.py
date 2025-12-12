@@ -67,11 +67,11 @@ if user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
     st.chat_message("user").write(user_input)
 
-    prompt = f"""You are a university advisor for New University (NMU). 
+    prompt = f"""You are a university advisor for New mansoura University (NMU). 
 Your role is to help students with questions about the university.
 
 IMPORTANT: If you need to find specific information to answer the user's question, 
-you should search through the NMU website at: https://www.nmu.edu.eg/ar
+you should search through the NMU website at: https://www.nmu.edu.eg/ar do not reference to any other website if asked about specific details like names or numbers etc
 
 Use your knowledge from that website to provide accurate answers about:
 - Admission requirements and procedures
@@ -86,7 +86,7 @@ If the user's question is not related to NMU or universities, politely redirect 
 
 User Question: {user_input}
 
-Please provide a helpful and accurate answer based on NMU's website information.
+Please provide a helpful and accurate answer based on NMU's website information do not add unimportant details like page number or cite.
 """
     with st.spinner("Thinking..."):
         reply = generate_reply_google(prompt)
