@@ -1,9 +1,9 @@
 [theme]
 # Core colors
 primaryColor = "#000000ff"   
-secondaryColor = "#fcfcfcff"             # Buttons, highlights, focus
-backgroundColor = "#d1d1d1ff"            # Main page background
-secondaryBackgroundColor = "#ffffffff"   # Sidebar background
+secondaryColor = "#ffc5c5ff"             # Buttons, highlights, focus
+backgroundColor = "#cacacaff"            # Main page background
+secondaryBackgroundColor = "#fcfcfcc7"   # Sidebar background
 textColor = "#8d1b1bff"                   # Text
 
 # Additional theme options (Streamlit will compute hover/focus from these)
