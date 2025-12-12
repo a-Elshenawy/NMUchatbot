@@ -1,1 +1,13 @@
+[theme]
+# Core colors
+primaryColor = "#0f2239"               # Buttons, highlights, focus
+backgroundColor = "#EEEEEE"            # Main page background
+secondaryBackgroundColor = "#931a23"   # Sidebar background
+textColor = "#0f2239"                   # Text
 
+# Additional theme options (Streamlit will compute hover/focus from these)
+successColor = "#28A745"                # For success messages
+warningColor = "#FFC107"                # For warning messages
+errorColor = "#DC3545"                  # For errors
+infoColor = "#17A2B8"                   # Info messages / accents
+font = "geom:https://fonts.googleapis.com/css2?family=Geom&display=swap"                      # Font
