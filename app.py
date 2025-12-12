@@ -22,7 +22,10 @@ st.markdown('<h2 style="text-align:center;">NMU Advisor Chatbot</h2>', unsafe_al
 # -----------------------------
 # Google AI Studio API key (hardcoded)
 # -----------------------------
-google_api_key = "YOUR_API_KEY_HERE"  # <-- replace with your actual API key
+import streamlit as st
+
+OPENAI_KEY = st.secrets["OPENAI_API_KEY"]
+
 
 # -----------------------------
 # Initialize chat state
