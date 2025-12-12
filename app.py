@@ -46,7 +46,7 @@ def generate_reply_google(prompt):
     client = genai.Client(api_key=OPENAI_KEY)
     contents = [types.Content(role="user", parts=[types.Part.from_text(text=prompt)])]
     tools = [types.Tool(googleSearch=types.GoogleSearch())]
-    config = types.GenerateContentConfig(tools=tools, temperature=0.3, max_output_tokens=600)
+    config = types.GenerateContentConfig(tools=tools, temperature=0.3, max_output_tokens=1200)
 
     try:
         response = client.models.generate_content(
